@@ -1,6 +1,6 @@
 {
   "name": "@red-cup-engineering/daleske",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "description": "Raster terminal interface engine: RGBA framebuffers, Kitty and Sixel encoders, capability detection, diffed blits, and shared terminal lifecycle.",
   "repository": {
@@ -16,7 +16,7 @@
     "red-cup-engineering"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=24.2.0"
   },
   "scripts": {
     "test": "node --test tests/prove-*.mjs"
@@ -49,7 +49,8 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "@red-cup-engineering/terminal-user-interface-engine": "0.1.1"
+    "@red-cup-engineering/terminal-user-interface-engine": "0.1.1",
+    "@red-cup-engineering/qwzspace": "0.10.0"
   },
   "private": false,
   "license": "MIT",
