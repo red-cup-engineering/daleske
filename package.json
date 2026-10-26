@@ -1,6 +1,6 @@
 {
   "name": "@red-cup-engineering/daleske",
-  "version": "0.3.0",
+  "version": "0.3.0-dev.0",
   "type": "module",
   "description": "Raster terminal interface engine: RGBA framebuffers, Kitty and Sixel encoders, capability detection, diffed blits, and shared terminal lifecycle.",
   "repository": {
