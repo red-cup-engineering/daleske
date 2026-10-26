@@ -18,7 +18,8 @@ settled-section raster projection and its interactive demonstration live in
 ## Shared raster owner
 
 From 0.3.0-dev.0, Daleske's `Framebuffer` extends the portable RGBA class from
-`@red-cup-engineering/qwzspace/framebuffer` at 0.11.0-dev.1. Abrash re-exports that
+`@red-cup-engineering/qwzspace/framebuffer`. Edition 0.3.0-dev.1 selects the
+received QwzSpace 0.11.0-dev.5 owner. Abrash re-exports that
 same class for browser rendering. RGBA allocation, byte conversion, pixel
 bounds, rectangle clipping and blitting therefore have one implementation.
 Daleske adds `cols`, `rows`, `tileRect` and `tilePixels` and retains its
@@ -40,6 +41,32 @@ to match the declared minimum of the resolved dependency closure.
 | `@red-cup-engineering/daleske/capability` | raster capability classification |
 | `@red-cup-engineering/daleske/blit` | changed tiles to graphics bytes |
 | `@red-cup-engineering/daleske/screen` | `PixelScreen` lifecycle adapter |
+
+## Received rendering core
+
+QwzSpace 0.11.0-dev.5 receives SignCraft 0.6.1-dev.2, SignGraph 0.7.1-dev.2,
+SignChain 0.4.2-dev.1, SignCell 0.13.1-dev.0 and Metrologic 0.14.3-dev.3.
+Every adjacent upstream owner is present; the additional core runtime edges
+resolve the same editions. This removes the earlier SignChain 0.4.2-dev.0
+direct selection of a second Metrologic 0.13.0. Daleske retains its terminal
+protocol and tile responsibilities. Legacy compatibility suppliers outside
+this core retain separate migration work.
+
+## 0.3.0-dev.1 coherent cohort qualification
+
+The ordinary frozen registry installation of QwzSpace 0.11.0-dev.5 passes all
+seven native cases on Node 24.22.1: the original four terminal modules with
+54 assertions and the three shared-raster cases. There are zero failures or
+skipped cases; runtime and test implementations are unchanged. PNPM 11.25.0
+generated the lock through the original supply-chain policy, then received
+813 packages through a separate frozen installation with lifecycle scripts
+disabled. Only exact selected editions retain release-age exceptions.
+
+The received QwzSpace archive names source commit
+`80d21784d39939c6146b1a77f6d3a0ee37ee70aa`; every declared runtime file matches
+that Git source. These checks qualify source and terminal protocol bytes.
+A combined published raycast receiver and physical terminal presentation
+remain distinct receiving steps.
 
 ## 0.3.0-dev.0 source qualification
 
