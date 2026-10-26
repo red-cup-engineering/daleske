@@ -9,73 +9,18 @@
 // Pure data + pure functions: no node:tty, no I/O, no encoder. A Framebuffer is constructed, drawn
 // onto, and diffed. Encoding (kitty/sixel) lives in its own module and consumes a tile's pixels.
 
+import { Framebuffer as RasterFramebuffer } from "@red-cup-engineering/qwzspace/framebuffer";
+
 export const DEFAULT_TILE = 64; // px; a tile is the unit of re-transmission in the diff
 
-// clamp a number to a byte
-const b = (n) => (n < 0 ? 0 : n > 255 ? 255 : n | 0);
-
-export class Framebuffer {
-  // width/height in PIXELS. `tile` is the side length of a (square) diff tile. The raster is a flat
-  // Uint8ClampedArray of RGBA quadruples in row-major order.
+// Keep Daleske's public constructor and terminal tile geometry while inheriting
+// the same portable RGBA storage and drawing operations that Abrash consumes.
+export class Framebuffer extends RasterFramebuffer {
   constructor(width, height, tile = DEFAULT_TILE) {
-    this.width = Math.max(0, width | 0);
-    this.height = Math.max(0, height | 0);
-    this.tile = Math.max(1, tile | 0);
-    this.data = new Uint8ClampedArray(this.width * this.height * 4);
+    super(width, height, tile);
     // tile grid dimensions (ceil so a partial edge tile still counts)
     this.cols = Math.ceil(this.width / this.tile);
     this.rows = Math.ceil(this.height / this.tile);
-  }
-
-  inBounds(x, y) {
-    return x >= 0 && y >= 0 && x < this.width && y < this.height;
-  }
-
-  // setPixel(x, y, [r,g,b,a]) — write one RGBA pixel (a defaults to opaque). Out-of-bounds is a
-  // no-op so callers can draw past the edge without guarding.
-  setPixel(x, y, r, g, b8, a = 255) {
-    if (!this.inBounds(x, y)) return this;
-    const i = (y * this.width + x) * 4;
-    this.data[i] = b(r); this.data[i + 1] = b(g); this.data[i + 2] = b(b8); this.data[i + 3] = b(a);
-    return this;
-  }
-
-  // getPixel(x, y) -> [r,g,b,a]. Out-of-bounds reads as transparent black.
-  getPixel(x, y) {
-    if (!this.inBounds(x, y)) return [0, 0, 0, 0];
-    const i = (y * this.width + x) * 4;
-    return [this.data[i], this.data[i + 1], this.data[i + 2], this.data[i + 3]];
-  }
-
-  // clear(rgba) — fill the whole raster with one color (default transparent black).
-  clear(r = 0, g = 0, b8 = 0, a = 0) {
-    for (let i = 0; i < this.data.length; i += 4) {
-      this.data[i] = b(r); this.data[i + 1] = b(g); this.data[i + 2] = b(b8); this.data[i + 3] = b(a);
-    }
-    return this;
-  }
-
-  // fillRect(x, y, w, h, rgba) — paint a solid rectangle, clipped to the raster.
-  fillRect(x, y, w, h, r, g, b8, a = 255) {
-    const x1 = Math.max(0, x), y1 = Math.max(0, y);
-    const x2 = Math.min(this.width, x + w), y2 = Math.min(this.height, y + h);
-    for (let yy = y1; yy < y2; yy++) {
-      for (let xx = x1; xx < x2; xx++) this.setPixel(xx, yy, r, g, b8, a);
-    }
-    return this;
-  }
-
-  // blit(src, x, y) — copy another framebuffer's pixels onto this one at (x,y), clipped. The pixel
-  // analogue of arnold's cell blit: lets a region be composed into a parent without the region
-  // knowing its absolute position.
-  blit(src, x, y) {
-    for (let sy = 0; sy < src.height; sy++) {
-      for (let sx = 0; sx < src.width; sx++) {
-        const [r, g, b8, a] = src.getPixel(sx, sy);
-        this.setPixel(x + sx, y + sy, r, g, b8, a);
-      }
-    }
-    return this;
   }
 
   // tileRect(col, row) -> { x, y, w, h } — the pixel extent of tile (col,row), clipped to the edge.
