@@ -18,7 +18,7 @@ settled-section raster projection and its interactive demonstration live in
 ## Shared raster owner
 
 From 0.3.0, Daleske's `Framebuffer` extends the portable RGBA class from
-`@red-cup-engineering/qwzspace/framebuffer` at 0.10.0. Abrash re-exports that
+`@red-cup-engineering/qwzspace/framebuffer` at 0.11.0-dev.1. Abrash re-exports that
 same class for browser rendering. RGBA allocation, byte conversion, pixel
 bounds, rectangle clipping and blitting therefore have one implementation.
 Daleske adds `cols`, `rows`, `tileRect` and `tilePixels` and retains its
@@ -40,3 +40,14 @@ to match the declared minimum of the resolved dependency closure.
 | `@red-cup-engineering/daleske/capability` | raster capability classification |
 | `@red-cup-engineering/daleske/blit` | changed tiles to graphics bytes |
 | `@red-cup-engineering/daleske/screen` | `PixelScreen` lifecycle adapter |
+
+## 0.3.0 source qualification
+
+A frozen registry install of QwzSpace 0.11.0-dev.1 passes the original four
+terminal test modules (54 assertions) and three shared-raster cases on Node
+24.22.1. The shared cases verify inherited method identity, public buffer
+fields, clipped edge pixels and alpha, unchanged-tile suppression, decoded
+Kitty payloads, and whole-image Kitty/Sixel encoding from the portable owner.
+The received QwzSpace archive carries source commit
+`922f2d3000a3de2b4b24271463d3f0a18a934d3e`. These checks qualify source and
+protocol bytes; physical terminal display is a separate receiving step.
